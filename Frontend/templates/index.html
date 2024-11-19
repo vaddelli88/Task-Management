@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task Management App</title>
+    <!-- Updated CSS Path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>TaskManager</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="#about">About</a>
+            <a href="{{ url_for('register') }}" class="btn">Register</a>
+            <a href="{{ url_for('login') }}" class="btn">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <section class="main">
+        <h2>Welcome to TaskManager</h2>
+        <p>Stay on top of your tasks and improve your productivity with TaskManager.</p>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About TaskManager</h2>
+        <p>TaskManager is designed to help both individuals and teams organize and prioritize tasks effectively.</p>
+        <div class="content">
+            <h3>Features of TaskManager</h3>
+            <ul>
+                <li>Create tasks with deadlines and reminders.</li>
+                <li>Track your progress and get notifications.</li>
+                <li>Collaborate with team members and share tasks.</li>
+                <li>Set priorities and customize task labels.</li>
+                <li>Access your tasks on any device, anytime.</li>
+            </ul>
+            <p>With TaskManager, managing your projects has never been easier. Whether you’re working solo or with a team, you can rely on TaskManager for efficient task management.</p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 TaskManager. <a href="{{ url_for('register') }}">Sign Up</a> | <a href="{{ url_for('login') }}">Log In</a></p>
+    </footer>
+
+    <!-- Updated JS Path -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

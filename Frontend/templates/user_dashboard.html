@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Task Dashboard</h1>
+        <div class="user-controls">
+            <span>Welcome, <span id="username"></span>!</span>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <div class="content">
+        <div id="loading" class="hidden">Loading...</div>
+        
+        <div class="tasks-header">
+            <h2>Your Tasks</h2>
+            <button id="create-task-btn" class="primary-btn">Create New Task</button>
+        </div>
+
+        <div id="task-form-container" class="hidden">
+            <form id="task-form">
+                <div class="form-group">
+                    <label for="task-title">Title</label>
+                    <input type="text" id="task-title" required placeholder="Enter task title">
+                </div>
+                <div class="form-group">
+                    <label for="task-description">Description</label>
+                    <textarea id="task-description" required placeholder="Enter task description"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority" required>
+                            <option value="">Select Priority</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-status">Status</label>
+                        <select id="task-status" required>
+                            <option value="">Select Status</option>
+                            <option value="Yet-to-start">Yet to Start</option>
+                            <option value="In-progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Hold">On Hold</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-deadline">Deadline</label>
+                        <input type="date" id="task-deadline" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn">Save Task</button>
+                    <button type="button" onclick="closeTaskForm()" class="secondary-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="task-filters">
+            <div class="filter-group">
+                <label for="filter-priority">Filter by Priority:</label>
+                <select id="filter-priority">
+                    <option value="">All Priorities</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-status">Filter by Status:</label>
+                <select id="filter-status">
+                    <option value="">All Statuses</option>
+                    <option value="Yet-to-start">Yet to Start</option>
+                    <option value="In-progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Hold">On Hold</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <div id="no-tasks" class="hidden">
+            <p>No tasks available. Create your first task!</p>
+        </div>
+
+        <div id="task-list">
+            <!-- Tasks will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Task Manager. All rights reserved.</p>
+    </footer>
+
+    <!-- Debug logging -->
+    <script>
+        console.log('Dashboard loaded');
+        console.log('Access Token:', localStorage.getItem('access_token'));
+        console.log('Username:', localStorage.getItem('username'));
+    </script>
+    
+    <!-- Main JavaScript -->
+    <script src="{{ url_for('static', filename='js/user_dashboard.js') }}"></script>
+</body>
+</html>

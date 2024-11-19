@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>TaskManager</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        </nav>
+    </header>
+    <!-- End of Header Section -->
+
+    <!-- Main Content Section -->
+    <main class="content">
+        <section class="login-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required><br>
+                <input type="password" id="password" placeholder="Password" required><br>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+    </main>
+    <!-- End of Main Content Section -->
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 TaskManager. <a href="{{ url_for('register') }}">Sign Up</a> | <a href="{{ url_for('index') }}">Home</a></p>
+        </div>
+    </footer>
+    <!-- End of Footer Section -->
+
+    <!-- Link to External JS File -->
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+</body>
+</html>
