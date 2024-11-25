@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -107,10 +108,10 @@ def delete_task(request, task_id):
     try:
         task = Task.objects.get(id=task_id, user=request.user)
     except Task.DoesNotExist:
-        return Response({"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
     
     task.delete()
-    return Response({"message": "Task deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])
@@ -122,3 +123,38 @@ def get_single_task(request, task_id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Task.DoesNotExist:
         return Response({"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def get_task_by_priority(request, priority):
+    try:
+        # Fetch all tasks matching the priority for the authenticated user
+        tasks = Task.objects.filter(priority=priority, user=request.user)
+        if not tasks.exists():
+            return Response([], status=status.HTTP_200_OK)
+        
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def get_task_by_deadline(request, deadline):
+    try:
+        # Parse the deadline string to date object
+        deadline_date = datetime.strptime(deadline, '%Y-%m-%d').date()
+        
+        # Fetch all tasks matching the deadline for the authenticated user
+        tasks = Task.objects.filter(deadline=deadline_date, user=request.user)
+        if not tasks.exists():
+            return Response([], status=status.HTTP_200_OK)
+        
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except ValueError:
+        return Response({"error": "Invalid date format. Use YYYY-MM-DD"}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
